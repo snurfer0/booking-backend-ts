@@ -4,10 +4,10 @@ import 'graphql-import-node';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import resolvers from './resolversMap';
 import * as emptyTypeDefs from './schemas/empty.graphql';
-import * as userTypeDefs from './schemas/user.graphql';
+import * as bookingTypeDefs from './schemas/bookings.graphql';
 
 const schema: GraphQLSchema = makeExecutableSchema({
-	typeDefs: [emptyTypeDefs, userTypeDefs],
+	typeDefs: [emptyTypeDefs, bookingTypeDefs],
 	resolvers,
 });
 

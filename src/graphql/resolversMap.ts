@@ -1,7 +1,7 @@
 import { IResolvers } from '@graphql-tools/utils';
 import { merge } from 'lodash';
-import { UserResolvers } from './resolvers/UserResolver';
+import { BookingsResolvers } from './resolvers/BookingsResolvers';
 
-const resolverMap: IResolvers = merge(UserResolvers);
+const resolverMap: IResolvers = merge(BookingsResolvers);
 
 export default resolverMap;

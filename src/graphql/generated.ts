@@ -12,29 +12,76 @@ export type Scalars = {
   Float: number;
 };
 
-export type AuthenticateResponse = {
-  __typename?: 'AuthenticateResponse';
-  token: Scalars['String'];
+export type Address = {
+  __typename?: 'Address';
+  address: Scalars['String'];
+  city: Scalars['String'];
+  country: Scalars['String'];
+  createdAt: Scalars['String'];
+  id: Scalars['ID'];
+  venueName: Scalars['String'];
+  zip: Scalars['String'];
+};
+
+export type Booking = {
+  __typename?: 'Booking';
+  address: Address;
+  createdAt: Scalars['String'];
+  event: Event;
+  id: Scalars['ID'];
+  totalPrice: Scalars['Float'];
+  user: User;
+};
+
+export type BookingResponse = {
+  __typename?: 'BookingResponse';
+  message: Scalars['String'];
+  statusCode: Scalars['Int'];
+};
+
+export type Event = {
+  __typename?: 'Event';
+  createdAt: Scalars['String'];
+  description: Scalars['String'];
+  endTime: Scalars['String'];
+  id: Scalars['ID'];
+  startTime: Scalars['String'];
+  title: Scalars['String'];
+  user: User;
+  users: Array<User>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  register: AuthenticateResponse;
+  _empty?: Maybe<Scalars['String']>;
+  deleteBooking: BookingResponse;
 };
 
 
-export type MutationRegisterArgs = {
-  email: Scalars['String'];
-  password: Scalars['String'];
+export type MutationDeleteBookingArgs = {
+  id: Scalars['ID'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  login: AuthenticateResponse;
+  _empty?: Maybe<Scalars['String']>;
+  booking: Booking;
+  bookings: Array<Booking>;
 };
 
 
-export type QueryLoginArgs = {
+export type QueryBookingArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryBookingsArgs = {
+  limit: Scalars['Int'];
+};
+
+export type User = {
+  __typename?: 'User';
+  createdAt: Scalars['String'];
   email: Scalars['String'];
-  password: Scalars['String'];
+  id: Scalars['ID'];
 };

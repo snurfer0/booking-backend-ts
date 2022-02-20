@@ -1,7 +1,7 @@
-import { DataTypes, ModelDefined, Sequelize } from 'sequelize';
+import { DataTypes, ModelDefined, Sequelize, Optional } from 'sequelize';
 
 // You can also define modules in a functional way
-interface BookingAttributes {
+export interface BookingAttributes {
 	id: number;
 	totalPrice: number;
 	addressId: number;
@@ -11,58 +11,40 @@ interface BookingAttributes {
 	updatedAt: Date;
 }
 
-// And with a functional approach defining a module looks like this
-export default (sequelize: any): ModelDefined<BookingAttributes, null> => {
-	const Booking: ModelDefined<BookingAttributes, null> = sequelize.define(
-		'booking',
-		{
-			id: {
-				type: DataTypes.INTEGER,
-				allowNull: false,
-				primaryKey: true,
-				autoIncrement: true,
-			},
-			totalPrice: {
-				type: DataTypes.DECIMAL(10, 2),
-				allowNull: false,
-			},
-			addressId: {
-				type: DataTypes.INTEGER,
-				allowNull: true,
-				references: {
-					model: 'addresses',
-					key: 'id',
+// You can also set multiple attributes optional at once
+export type BookingCreationAttributes = Optional<BookingAttributes, 'createdAt' | 'updatedAt'>;
+
+// TODO: change any to Sequelize
+export default (
+	sequelize: Sequelize,
+): ModelDefined<BookingAttributes, BookingCreationAttributes> => {
+	const Booking: ModelDefined<BookingAttributes, BookingCreationAttributes> =
+		sequelize.define(
+			'booking',
+			{
+				id: {
+					type: DataTypes.INTEGER,
+					allowNull: false,
+					primaryKey: true,
+					autoIncrement: true,
+				},
+				totalPrice: {
+					type: DataTypes.DECIMAL(10, 2),
+					allowNull: false,
+				},
+				createdAt: {
+					type: DataTypes.DATE(6),
+					allowNull: false,
+					defaultValue: new Date(),
+				},
+				updatedAt: {
+					type: DataTypes.DATE(6),
+					allowNull: false,
+					defaultValue: new Date(),
 				},
 			},
-			userId: {
-				type: DataTypes.INTEGER,
-				allowNull: true,
-				references: {
-					model: 'users',
-					key: 'id',
-				},
-			},
-			eventId: {
-				type: DataTypes.INTEGER,
-				allowNull: false,
-				references: {
-					model: 'events',
-					key: 'id',
-				},
-			},
-			createdAt: {
-				type: DataTypes.DATE(6),
-				allowNull: false,
-				defaultValue: new Date(),
-			},
-			updatedAt: {
-				type: DataTypes.DATE(6),
-				allowNull: false,
-				defaultValue: new Date(),
-			},
-		},
-		{ tableName: 'bookings', timestamps: true },
-	);
+			{ tableName: 'bookings', timestamps: true },
+		);
 
 	return Booking;
 };

@@ -1,4 +1,8 @@
 {
+  "name": "bookings_api",
+  "description": "api for bookings",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
   "devDependencies": {
     "@graphql-codegen/cli": "2.6.2",
     "@graphql-codegen/typescript": "2.4.5",
@@ -29,6 +33,7 @@
     "sequelize-typescript": "^2.1.3",
     "sqlite3": "^5.0.2",
     "strong-error-handler": "^4.0.0",
+    "type-graphql": "^1.1.1",
     "typescript": "^4.5.5"
   }
 }

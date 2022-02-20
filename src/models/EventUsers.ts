@@ -1,7 +1,7 @@
 import { DataTypes, ModelDefined } from 'sequelize';
 
 // You can also define modules in a functional way
-interface EventUserAttributes {
+interface EventUsersAttributes {
 	id: number;
 	userId: number;
 	eventId: number;
@@ -10,15 +10,15 @@ interface EventUserAttributes {
 }
 
 // And with a functional approach defining a module looks like this
-export default (sequelize: any): ModelDefined<EventUserAttributes, null> => {
-	const EventUser: ModelDefined<EventUserAttributes, null> = sequelize.define(
+export default (sequelize: any): ModelDefined<EventUsersAttributes, null> => {
+	const EventUsers: ModelDefined<EventUsersAttributes, null> = sequelize.define(
 		'eventuser',
 		{
 			id: {
 				type: DataTypes.INTEGER,
 				allowNull: false,
 				primaryKey: true,
-				autoIncrement: true,
+				autoIncrement: true,	
 			},
 			userId: {
 				type: DataTypes.INTEGER,
@@ -26,6 +26,7 @@ export default (sequelize: any): ModelDefined<EventUserAttributes, null> => {
 				references: {
 					model: 'users',
 					key: 'id',
+					unique:false
 				},
 			},
 			eventId: {
@@ -34,6 +35,7 @@ export default (sequelize: any): ModelDefined<EventUserAttributes, null> => {
 				references: {
 					model: 'events',
 					key: 'id',
+					unique: false
 				},
 			},
 			createdAt: {
@@ -53,5 +55,5 @@ export default (sequelize: any): ModelDefined<EventUserAttributes, null> => {
 		},
 	);
 
-	return EventUser;
+	return EventUsers;
 };
