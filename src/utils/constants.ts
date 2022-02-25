@@ -11,13 +11,8 @@ export const defaultEventsAttributes: string[] = [
 	'description',
 	'startTime',
 	'endTime',
-	'createdAt',
 ];
 
-export const defaultBookingsAttributes: string[] = [
-	'id',
-	'totalPrice',
-	'createdAt',
-];
+export const defaultBookingsAttributes: string[] = ['id', 'totalPrice'];
 
 export const defaultUsersAttributes: string[] = ['email'];

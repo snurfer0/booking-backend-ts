@@ -1,9 +1,15 @@
 import bodyParser from 'body-parser';
 import express from 'express';
 import errorhandler from 'strong-error-handler';
+import * as dotenv from 'dotenv';
+import { bookingsRoutes } from './routes/bookings.routes';
+
 
 export const createApp = async () => {
-    let app = express();
+	let app = express();
+	
+	// environment variables path
+	dotenv.config({ path: __dirname + '../.env' });
     
 	// middleware for parsing application/x-www-form-urlencoded
 	app.use(bodyParser.urlencoded({ extended: true }));
@@ -23,6 +29,8 @@ export const createApp = async () => {
 
 		next();
 	});
+
+	bookingsRoutes(app)
 
 	app.use(
 		errorhandler({

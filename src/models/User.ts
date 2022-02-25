@@ -1,6 +1,5 @@
 import { DataTypes, ModelDefined, Sequelize, Optional,  } from 'sequelize';
 
-// You can also define modules in a functional way
 interface UserAttributes {
 	id: number;
 	email: string;
@@ -8,36 +7,44 @@ interface UserAttributes {
 	updatedAt: Date;
 }
 
-// And with a functional approach defining a module looks like this
-export default (sequelize: any): ModelDefined<UserAttributes, null> => {
-	const User: ModelDefined<UserAttributes, null> = sequelize.define(
-		'user',
-		{
-			id: {
-				type: DataTypes.INTEGER,
-				primaryKey: true,
-				autoIncrement: true,
+export type UserCreationAttributes = Optional<
+	UserAttributes,
+	'createdAt' | 'updatedAt'
+>;
+
+
+export default (
+	sequelize: Sequelize,
+): ModelDefined<UserAttributes, UserCreationAttributes> => {
+	const User: ModelDefined<UserAttributes, UserCreationAttributes> =
+		sequelize.define(
+			'user',
+			{
+				id: {
+					type: DataTypes.INTEGER,
+					primaryKey: true,
+					autoIncrement: true,
+				},
+				email: {
+					type: DataTypes.STRING(45),
+					allowNull: true,
+				},
+				createdAt: {
+					type: DataTypes.DATE(6),
+					allowNull: false,
+					defaultValue: new Date(),
+				},
+				updatedAt: {
+					type: DataTypes.DATE(6),
+					allowNull: false,
+					defaultValue: new Date(),
+				},
 			},
-			email: {
-				type: DataTypes.STRING(45),
-				allowNull: true,
+			{
+				tableName: 'users',
+				timestamps: true,
 			},
-			createdAt: {
-				type: DataTypes.DATE(6),
-				allowNull: false,
-				defaultValue: new Date(),
-			},
-			updatedAt: {
-				type: DataTypes.DATE(6),
-				allowNull: false,
-				defaultValue: new Date(),
-			},
-		},
-		{
-			tableName: 'users',
-			timestamps: true,
-		},
-	);
+		);
 
 	return User;
 };

@@ -1,6 +1,6 @@
-import { DataTypes, ModelDefined, Sequelize } from 'sequelize';
+import { DataTypes, ModelDefined, Sequelize, Optional } from 'sequelize';
 
-// You can also define modules in a functional way
+
 interface AddressAttributes {
 	id: number;
 	venueName: string;
@@ -11,58 +11,61 @@ interface AddressAttributes {
 	createdAt: Date;
 	updatedAt: Date;
 }
+export type AddressCreationAttributes = Optional<
+	AddressAttributes,
+	'createdAt' | 'updatedAt'
+>;
 
-// And with a functional approach defining a module looks like this
+
 export default (
-	sequelize: any
-): ModelDefined<AddressAttributes, null> => {
-	const Address: ModelDefined<
-		AddressAttributes, null
-	> = sequelize.define(
-		'address',
-		{
-			id: {
-				type: DataTypes.INTEGER,
-				allowNull: false,
-				primaryKey: true,
-				autoIncrement: true,
+	sequelize: Sequelize,
+): ModelDefined<AddressAttributes, AddressCreationAttributes> => {
+	const Address: ModelDefined<AddressAttributes, AddressCreationAttributes> =
+		sequelize.define(
+			'address',
+			{
+				id: {
+					type: DataTypes.INTEGER,
+					allowNull: false,
+					primaryKey: true,
+					autoIncrement: true,
+				},
+				venueName: {
+					type: DataTypes.STRING(45),
+					allowNull: false,
+				},
+				country: {
+					type: DataTypes.STRING(45),
+					allowNull: false,
+				},
+				city: {
+					type: DataTypes.STRING(250),
+					allowNull: false,
+				},
+				address: {
+					type: DataTypes.STRING(45),
+					allowNull: false,
+				},
+				zip: {
+					type: DataTypes.STRING(25),
+					allowNull: false,
+				},
+				createdAt: {
+					type: DataTypes.DATE(6),
+					allowNull: false,
+					defaultValue: new Date(),
+				},
+				updatedAt: {
+					type: DataTypes.DATE(6),
+					allowNull: false,
+					defaultValue: new Date(),
+				},
 			},
-			venueName: {
-				type: DataTypes.STRING(45),
-				allowNull: false,
+			{
+				tableName: 'addresses',
+				timestamps: true,
 			},
-			country: {
-				type: DataTypes.STRING(45),
-				allowNull: false,
-			},
-			city: {
-				type: DataTypes.STRING(250),
-				allowNull: false,
-			},
-			address: {
-				type: DataTypes.STRING(45),
-				allowNull: false,
-			},
-			zip: {
-				type: DataTypes.STRING(25),
-				allowNull: false,
-			},
-			createdAt: {
-				type: DataTypes.DATE(6),
-				allowNull: false,
-				defaultValue: new Date(),
-			},
-			updatedAt: {
-				type: DataTypes.DATE(6),
-				allowNull: false,
-				defaultValue: new Date(),
-			},
-		},
-		{
-			tableName: 'addresses',
-			timestamps: true,
-		},
-	);
+		);
 
 	return Address;
 };

@@ -1,15 +1,18 @@
-import { Sequelize } from 'sequelize-typescript';
+import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import AddressFactory from './Address';
 import BookingFactory from './Booking';
 import EventFactory from './Event';
 import EventUsersFactory from './EventUsers';
 import UserFactory from './User';
 
-export const sequelize = new Sequelize({
+const options: SequelizeOptions = {
 	dialect: 'sqlite',
 	database: 'bookings',
 	storage: './db/development.db',
-});
+};
+
+
+export const sequelize: Sequelize = new Sequelize(options);
 
 export const User = UserFactory(sequelize);
 export const Event = EventFactory(sequelize);
