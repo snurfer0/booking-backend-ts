@@ -17,9 +17,11 @@
     "codegen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
+    "@types/cors": "^2.8.12",
     "@types/lodash": "^4.14.178",
     "@types/node": "^17.0.18",
     "@types/validator": "^13.7.1",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "lodash": "^4.17.21",

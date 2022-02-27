@@ -3,14 +3,25 @@ import express from 'express';
 import errorhandler from 'strong-error-handler';
 import * as dotenv from 'dotenv';
 import { bookingsRoutes } from './routes/bookings.routes';
-
+import cors from 'cors';
 
 export const createApp = async () => {
 	let app = express();
-	
+
+	// Cors options set up
+	var corsOptions = {
+		origin: [
+			'http://localhost:3000',
+			'http://localhost:3001',
+		],
+		optionsSuccessStatus: 200,
+	};
+
+	app.use(cors(corsOptions));
+
 	// environment variables path
 	dotenv.config({ path: __dirname + '../.env' });
-    
+
 	// middleware for parsing application/x-www-form-urlencoded
 	app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -30,14 +41,14 @@ export const createApp = async () => {
 		next();
 	});
 
-	bookingsRoutes(app)
+	bookingsRoutes(app);
 
 	app.use(
 		errorhandler({
 			debug: process.env.ENV !== 'prod',
 			log: true,
 		}),
-    );
-    
-    return app
+	);
+
+	return app;
 };

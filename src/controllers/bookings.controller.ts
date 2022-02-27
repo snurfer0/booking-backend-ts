@@ -45,8 +45,8 @@ export const getBookingsFromPage = async (
 	next: NextFunction,
 ): Promise<void> => {
 	try {
-		let offset: number = 0;
-		const page: number = parseInt(req.params.page);
+		let offset = 0;
+		const page = parseInt(req.params.page);
 
 		if (page < 1) {
 			next(new PageNotFoundException(page));
@@ -56,21 +56,19 @@ export const getBookingsFromPage = async (
 			offset = 6 * (page - 1);
 		}
 
-		console.log('offset', offset);
-
 		const totalPages: number = Math.round((await dbBooking.count()) / 6);
 
 		let bookings: Model<BookingAttributes, BookingCreationAttributes>[] =
 			await dbBooking.findAll({
 				include: [
-					// {
-					// 	model: dbUser,
-					// 	attributes: defaultUsersAttributes,
-					// },
-					// {
-					// 	model: dbAddress,
-					// 	attributes: defaultAddressAttributes,
-					// },
+					{
+						model: dbUser,
+						attributes: defaultUsersAttributes,
+					},
+					{
+						model: dbAddress,
+						attributes: defaultAddressAttributes,
+					},
 					{
 						model: dbEvent,
 						attributes: defaultEventsAttributes,
@@ -83,10 +81,8 @@ export const getBookingsFromPage = async (
 						],
 					},
 				],
-				order: [['event', 'startTime', 'ASC']],
 				offset: offset,
 				limit: 6,
-				subQuery: false,
 				attributes: defaultBookingsAttributes,
 			});
 
@@ -95,7 +91,7 @@ export const getBookingsFromPage = async (
 		} else {
 			res.status(404).send({ message: 'No bookings found.' });
 		}
-	} catch (err: unknown) {
+	} catch (err) {
 		console.error(err);
 		res.status(400).send(err);
 	}
