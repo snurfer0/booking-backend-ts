@@ -7,6 +7,7 @@ export const defaultAddressAttributes: string[] = [
 ];
 
 export const defaultEventsAttributes: string[] = [
+	'id',
 	'title',
 	'description',
 	'startTime',

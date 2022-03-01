@@ -81,6 +81,7 @@ export const getBookingsFromPage = async (
 						],
 					},
 				],
+				order: [[dbEvent, 'startTime', 'ASC']],
 				offset: offset,
 				limit: 6,
 				attributes: defaultBookingsAttributes,
@@ -89,8 +90,9 @@ export const getBookingsFromPage = async (
 		if (bookings) {
 			res.status(200).send({ bookings: bookings, pages: totalPages });
 		} else {
-			res.status(404).send({ message: 'No bookings found.' });
+			res.status(404).send({ message: 'Not Found' });
 		}
+
 	} catch (err) {
 		console.error(err);
 		res.status(400).send(err);
